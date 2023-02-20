@@ -1,0 +1,52 @@
+[
+  {
+    "firstName": "Witty",
+    "middleName": null,
+    "lastName": "Liebmann",
+    "email": "cliebmann0@ucsd.edu",
+    "phone": "8284386604",
+    "role": "SuperAdmin",
+    "createdOn": "2023-02-20",
+    "modifiedOn": "2023-02-20"
+  },
+  {
+    "firstName": "Cyrille",
+    "middleName": "Madison",
+    "lastName": "Talman",
+    "email": "mtalman1@walmart.com",
+    "phone": "6846186967",
+    "role": "Subscriber",
+    "createdOn": "2023-02-20",
+    "modifiedOn": "2023-02-20"
+  },
+  {
+    "firstName": "Fayth",
+    "middleName": "Alvy",
+    "lastName": "Bligh",
+    "email": "abligh2@google.ru",
+    "phone": "6564986489",
+    "role": "Subscriber",
+    "createdOn": "2023-02-20",
+    "modifiedOn": "2023-02-20"
+  },
+  {
+    "firstName": "Barbra",
+    "middleName": "Maritsa",
+    "lastName": "Andreopolos",
+    "email": "mandreopolos3@i2i.jp",
+    "phone": "1107522481",
+    "role": "Admin",
+    "createdOn": "2023-02-20",
+    "modifiedOn": "2023-02-20"
+  },
+  {
+    "firstName": "Loren",
+    "middleName": "Garwood",
+    "lastName": "Barthelme",
+    "email": "gbarthelme4@cam.ac.uk",
+    "phone": "8649057660",
+    "role": "Admin",
+    "createdOn": "2023-02-20",
+    "modifiedOn": "2023-02-20"
+  }
+]
