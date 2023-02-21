@@ -56,7 +56,6 @@ interface EditableRowProps extends Pick<TableRowProps, 'user'> {
 }
 
 function EditableRow({ user, setEditable: setEditable }: EditableRowProps) {
-  console.log(user)
   const { updateUser: updateUserById } = useContext(UsersContext)
 
   const [firstName, setFirstName] = useState(user.firstName)
