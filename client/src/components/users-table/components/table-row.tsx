@@ -80,6 +80,18 @@ function EditableRow({ user, setEditable: setEditable }: EditableRowProps) {
   }
 
   function handleSave() {
+    if (!firstName) {
+      alert('first name is required!')
+      return
+    }
+    if (!email) {
+      alert('email is required!')
+      return
+    }
+    if (!role) {
+      alert('role is required!')
+      return
+    }
     updateUserById(user.id, {
       firstName,
       middleName,
