@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react'
+import DatePicker from 'react-datepicker'
 import { UsersContext } from '../../../contexts/users-context'
 import { Role, User } from '../../../types/user'
 
@@ -29,7 +30,7 @@ interface BasicRowProps extends TableRowProps {
 }
 
 function BasicRow({ user, setEditable }: BasicRowProps) {
-  const { deleteUserById } = useContext(UsersContext)
+  const { deleteUser: deleteUserById } = useContext(UsersContext)
 
   return (
     <tr>
@@ -55,7 +56,8 @@ interface EditableRowProps extends Pick<TableRowProps, 'user'> {
 }
 
 function EditableRow({ user, setEditable: setEditable }: EditableRowProps) {
-  const { updateUserById } = useContext(UsersContext)
+  console.log(user)
+  const { updateUser: updateUserById } = useContext(UsersContext)
 
   const [firstName, setFirstName] = useState(user.firstName)
   const [middleName, setMiddleName] = useState(user.middleName)
@@ -63,8 +65,8 @@ function EditableRow({ user, setEditable: setEditable }: EditableRowProps) {
   const [email, setEmail] = useState(user.email)
   const [phone, setPhone] = useState(user.phone)
   const [role, setRole] = useState(user.role)
-  const [createdOn, setCreatedOn] = useState(user.createdOn)
-  const [modifiedOn, setModifiedOn] = useState(user.modifiedOn)
+  const [createdOn, setCreatedOn] = useState(user.createdOn ? new Date(user.createdOn) : undefined)
+  const [modifiedOn, setModifiedOn] = useState(user.modifiedOn ? new Date(user.modifiedOn) : undefined)
 
   function handleCancel() {
     setFirstName(user.firstName)
@@ -73,8 +75,8 @@ function EditableRow({ user, setEditable: setEditable }: EditableRowProps) {
     setEmail(user.email)
     setPhone(user.phone)
     setRole(user.role)
-    setCreatedOn(user.createdOn)
-    setModifiedOn(user.modifiedOn)
+    setCreatedOn(user.createdOn ? new Date(user.createdOn) : undefined)
+    setModifiedOn(user.modifiedOn ? new Date(user.modifiedOn) : undefined)
 
     setEditable(false)
   }
@@ -99,8 +101,8 @@ function EditableRow({ user, setEditable: setEditable }: EditableRowProps) {
       email,
       phone,
       role,
-      createdOn,
-      modifiedOn,
+      createdOn: createdOn?.toISOString(),
+      modifiedOn: modifiedOn?.toISOString(),
     })
 
     setEditable(false)
@@ -147,10 +149,14 @@ function EditableRow({ user, setEditable: setEditable }: EditableRowProps) {
       </td>
       <td>
         <input
-          type="text"
+          type="number"
           value={phone}
           onChange={(event) => {
-            setPhone(event.target.value)
+            if (event.target.value) {
+              setPhone(+event.target.value)
+            } else {
+              setPhone(undefined)
+            }
           }}
         />
       </td>
@@ -169,22 +175,10 @@ function EditableRow({ user, setEditable: setEditable }: EditableRowProps) {
         </select>
       </td>
       <td>
-        <input
-          type="date"
-          value={createdOn}
-          onChange={(event) => {
-            setCreatedOn(event.target.value)
-          }}
-        />
+        <DatePicker selected={createdOn} onChange={(date) => setCreatedOn(date ?? undefined)} />
       </td>
       <td>
-        <input
-          type="date"
-          value={modifiedOn}
-          onChange={(event) => {
-            setModifiedOn(event.target.value as Role)
-          }}
-        />
+        <DatePicker selected={modifiedOn} onChange={(date) => setModifiedOn(date ?? undefined)} />
       </td>
       <td>
         <button onClick={() => handleSave()}>Save</button>
