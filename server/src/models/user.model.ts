@@ -1,6 +1,6 @@
 import {Entity, model, property} from '@loopback/repository';
 
-export enum Role {
+export enum UserRole {
   SuperAdmin = 'SuperAdmin',
   Admin = 'Admin',
   Subscriber = 'Subscriber',
@@ -59,10 +59,10 @@ export class User extends Entity {
     type: 'string',
     required: true,
     jsonSchema: {
-      enum: Object.values(Role),
+      enum: Object.values(UserRole),
     },
   })
-  role: Role;
+  role: UserRole;
 
   @property({
     type: 'date',
