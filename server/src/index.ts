@@ -1,15 +1,11 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import dotEnvExtended from 'dotenv-extended';
+dotEnvExtended.load({errorOnMissing: true, errorOnRegex: true});
 
 import {ApplicationConfig, Lb4GettingStartedApplication} from './application';
-import { runEnvValidator } from './boot/env-validator';
 
 export * from './application';
 
 export async function main(options: ApplicationConfig = {}) {
-  // check required envs
-  await runEnvValidator()
-
   // run the application
   const app = new Lb4GettingStartedApplication(options);
   await app.boot();
