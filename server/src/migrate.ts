@@ -6,7 +6,10 @@ export async function migrate(args: string[]) {
 
   const app = new Lb4GettingStartedApplication();
   await app.boot();
-  await app.migrateSchema({existingSchema, models: ['User', 'Customer', 'Role']});
+  await app.migrateSchema({
+    existingSchema,
+    models: ['Customer', 'Role', 'User'],
+  });
 
   // Connectors usually keep a pool of opened connections,
   // this keeps the process running even after all work is done.

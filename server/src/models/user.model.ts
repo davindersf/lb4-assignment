@@ -1,12 +1,26 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo} from '@loopback/repository';
+import {UserRole} from '../enums/user-role.enum';
+import {Customer} from './customer.model';
+import {Role} from './role.model';
 
-export enum UserRole {
-  SuperAdmin = 'SuperAdmin',
-  Admin = 'Admin',
-  Subscriber = 'Subscriber',
-}
-
-@model()
+@model({
+  settings: {
+    foreignKeys: {
+      fk_user_customerId: {
+        name: 'fk_user_customerId',
+        entity: 'Customer',
+        entityKey: 'id',
+        foreignKey: 'customerid', // in postgres, prop names will be all lowercase that's why not using camel case for prop naming ("customerId")
+      },
+      fk_user_roleId: {
+        name: 'fk_user_roleId',
+        entity: 'Role',
+        entityKey: 'id',
+        foreignKey: 'roleid', // in postgres, prop names will be all lowercase that's why not using camel case for prop naming ("customerId")
+      },
+    },
+  },
+})
 export class User extends Entity {
   @property({
     id: true,
@@ -75,6 +89,12 @@ export class User extends Entity {
     defaultFn: 'now',
   })
   modifiedOn?: Date;
+
+  @belongsTo(() => Customer)
+  customerId: number;
+
+  @belongsTo(() => Role)
+  roleId: number;
 
   constructor(data?: Partial<User>) {
     super(data);

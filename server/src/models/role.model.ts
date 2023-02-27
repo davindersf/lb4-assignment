@@ -1,5 +1,5 @@
 import {Entity, model, property} from '@loopback/repository';
-import {UserRole} from './user.model';
+import {UserRole} from '../enums/user-role.enum';
 
 @model()
 export class Role extends Entity {
