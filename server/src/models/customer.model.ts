@@ -5,7 +5,7 @@ export class Customer extends Entity {
   @property({
     type: 'number',
     id: true,
-    generated: false,
+    generated: true,
   })
   id?: number;
 
@@ -24,7 +24,6 @@ export class Customer extends Entity {
     type: 'string',
   })
   address?: string;
-
 
   constructor(data?: Partial<Customer>) {
     super(data);
