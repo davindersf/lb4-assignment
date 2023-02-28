@@ -1,5 +1,4 @@
 import {Entity, model, property, belongsTo} from '@loopback/repository';
-import {UserRole} from '../enums/user-role.enum';
 import {Customer} from './customer.model';
 import {Role} from './role.model';
 
@@ -68,15 +67,6 @@ export class User extends Entity {
     type: 'number',
   })
   phone?: number;
-
-  @property({
-    type: 'string',
-    required: true,
-    jsonSchema: {
-      enum: Object.values(UserRole),
-    },
-  })
-  role: UserRole;
 
   @property({
     type: 'date',
