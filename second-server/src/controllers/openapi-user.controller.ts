@@ -1,7 +1,12 @@
 // Uncomment these imports to begin using these cool features!
 
 import {inject} from '@loopback/core';
-import {Count, CountSchema} from '@loopback/repository';
+import {
+  CountSchema,
+  Filter,
+  FilterExcludingWhere,
+  Where,
+} from '@loopback/repository';
 import {
   del,
   get,
@@ -14,12 +19,12 @@ import {
   response,
 } from '@loopback/rest';
 import {User} from '../models';
-import {Api1UserService} from '../services';
+import {OpenapiUserService} from '../services';
 
-export class Api1UserController {
+export class OpenapiUserController {
   constructor(
-    @inject('services.Api1UserService')
-    protected api1UserService: Api1UserService,
+    @inject('services.OpenapiUserService')
+    protected openapiUserService: OpenapiUserService,
   ) {}
 
   @post('/users')
@@ -39,7 +44,11 @@ export class Api1UserController {
     })
     user: User,
   ) {
-    return this.api1UserService.createUser(user);
+    const response = await this.openapiUserService.usersControllerCreate(
+      {},
+      {requestBody: user},
+    );
+    return response.body;
   }
 
   @get('/users/count')
@@ -47,8 +56,11 @@ export class Api1UserController {
     description: 'User model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  getUsersCount() {
-    return this.api1UserService.getUsersCount();
+  async getUsersCount(@param.where(User) where: Where<User>) {
+    const response = await this.openapiUserService.usersControllerCount({
+      where,
+    });
+    return response.body;
   }
 
   @get('/users')
@@ -59,8 +71,11 @@ export class Api1UserController {
       items: getModelSchemaRef(User, {includeRelations: true}),
     },
   })
-  getUsers() {
-    return this.api1UserService.getUsers();
+  async getUsers(@param.filter(User) filter: Filter<User>) {
+    const response = await this.openapiUserService.usersControllerFind({
+      filter,
+    });
+    return response.body;
   }
 
   @patch('/users')
@@ -68,7 +83,7 @@ export class Api1UserController {
     description: 'User PATCH success count',
     content: {'application/json': {schema: CountSchema}},
   })
-  updateAllUsers(
+  async updateAllUsers(
     @requestBody({
       content: {
         'application/json': {
@@ -77,8 +92,13 @@ export class Api1UserController {
       },
     })
     user: Partial<User>,
+    @param.where(User) where: Where<User>,
   ) {
-    return this.api1UserService.updateAllUsers(user);
+    const response = await this.openapiUserService.usersControllerUpdateAll(
+      {where},
+      {requestBody: user},
+    );
+    return response.body;
   }
 
   @get('/users/{id}')
@@ -90,15 +110,22 @@ export class Api1UserController {
       },
     },
   })
-  getUserById(@param.path.number('id') id: number) {
-    return this.api1UserService.getUserById(id);
+  async getUserById(
+    @param.path.number('id') id: number,
+    @param.filter(User, {exclude: 'where'}) filter: FilterExcludingWhere<User>,
+  ) {
+    const response = await this.openapiUserService.usersControllerFindById({
+      id,
+      filter,
+    });
+    return response.body;
   }
 
   @patch('/users/{id}')
   @response(204, {
     description: 'User PATCH success',
   })
-  updateUserById(
+  async updateUserById(
     @param.path.number('id') id: number,
     @requestBody({
       content: {
@@ -108,24 +135,35 @@ export class Api1UserController {
       },
     })
     user: Partial<User>,
-  ): Promise<void> {
-    return this.api1UserService.updateUserById(id, user);
+  ) {
+    const response = await this.openapiUserService.usersControllerUpdateById(
+      {id},
+      {requestBody: user},
+    );
+    return response.body;
   }
 
   @put('/users/{id}')
   @response(204)
-  replaceUserById(
+  async replaceUserById(
     @param.path.number('id') id: number,
     @requestBody() user: User,
-  ): Promise<void> {
-    return this.api1UserService.replaceUserById(id, user);
+  ) {
+    const response = await this.openapiUserService.usersControllerReplaceById(
+      {id},
+      {requestBody: user},
+    );
+    return response.body;
   }
 
   @del('/users/{id}')
   @response(204, {
     description: 'User DELETE success',
   })
-  deleteUserById(@param.query.number('id') id: number): Promise<void> {
-    return this.api1UserService.deleteUserById(id);
+  async deleteUserById(@param.query.number('id') id: number) {
+    const response = await this.openapiUserService.usersControllerDeleteById({
+      id,
+    });
+    return response.body;
   }
 }

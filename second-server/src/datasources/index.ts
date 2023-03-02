@@ -1,1 +1,1 @@
-export * from './api1.datasource';
+export * from './openapi.datasource';
