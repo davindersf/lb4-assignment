@@ -1,6 +1,6 @@
 import {Client, expect} from '@loopback/testlab';
 import {Lb4GettingStartedApplication} from '../..';
-import {setupApplication} from './test-helper';
+import {setupApplication} from '../test-helper';
 
 describe('PingController', () => {
   let app: Lb4GettingStartedApplication;

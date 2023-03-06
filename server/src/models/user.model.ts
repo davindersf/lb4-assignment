@@ -5,14 +5,14 @@ import {Role} from './role.model';
 @model({
   settings: {
     foreignKeys: {
-      fk_user_customerId: {
-        name: 'fk_user_customerId',
+      fkUserCustomerId: {
+        name: 'fkUserCustomerId',
         entity: 'Customer',
         entityKey: 'id',
         foreignKey: 'customerid', // in postgres, prop names will be all lowercase that's why not using camel case for prop naming ("customerId")
       },
-      fk_user_roleId: {
-        name: 'fk_user_roleId',
+      fkUserRoleId: {
+        name: 'fkUserRoleId',
         entity: 'Role',
         entityKey: 'id',
         foreignKey: 'roleid', // in postgres, prop names will be all lowercase that's why not using camel case for prop naming ("customerId")
