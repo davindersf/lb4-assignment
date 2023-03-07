@@ -1,6 +1,6 @@
 import {Client} from '@loopback/testlab';
 import {Lb4GettingStartedApplication} from '../..';
-import {setupApplication} from './test-helper';
+import {setupApplication} from '../test-helper';
 
 describe('HomePage', () => {
   let app: Lb4GettingStartedApplication;
