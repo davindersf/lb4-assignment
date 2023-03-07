@@ -9,7 +9,7 @@ import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import {MySequence} from './sequence';
-import {format, LoggingBindings, LoggingComponent, WinstonLoggerOptions} from '@loopback/logging';
+import { WinstonLoggerComponent } from './components/winston-logger';
 
 export {ApplicationConfig};
 
@@ -20,22 +20,7 @@ export class Lb4GettingStartedApplication extends BootMixin(
     super(options);
 
     // Winston logger
-    this.configure(LoggingBindings.COMPONENT).to({
-      enableFluent: false, // default to true
-      enableHttpAccessLog: true, // default to true
-    });
-    this.configure(LoggingBindings.FLUENT_SENDER).to({
-      host: process.env.FLUENTD_SERVICE_HOST ?? 'localhost',
-      port: +(process.env.FLUENTD_SERVICE_PORT_TCP ?? 24224),
-      timeout: 3.0,
-      reconnectInterval: 600000, // 10 minutes
-    });
-    this.configure<WinstonLoggerOptions>(LoggingBindings.WINSTON_LOGGER).to({
-      level: 'info',
-      format: format.json(),
-      defaultMeta: {framework: 'LoopBack'},
-    });
-    this.component(LoggingComponent);
+    this.component(WinstonLoggerComponent)
 
     // Set up the custom sequence
     this.sequence(MySequence);
