@@ -9,7 +9,8 @@ import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import {MySequence} from './sequence';
-import { WinstonLoggerComponent } from './components/winston-logger';
+import {WinstonLoggerComponent} from './components/winston-logger';
+import {turnCookieIntoJwt, cookieParserMiddleware} from './middlewares';
 
 export {ApplicationConfig};
 
@@ -20,10 +21,16 @@ export class Lb4GettingStartedApplication extends BootMixin(
     super(options);
 
     // Winston logger
-    this.component(WinstonLoggerComponent)
+    this.component(WinstonLoggerComponent);
 
     // Set up the custom sequence
     this.sequence(MySequence);
+
+    // Middleware: cookie parser
+    this.middleware(cookieParserMiddleware);
+
+    // Middleware: turn cookie into jwt
+    this.middleware(turnCookieIntoJwt);
 
     // Set up default home page
     this.static('/', path.join(__dirname, '../public'));
