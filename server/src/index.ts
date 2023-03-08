@@ -1,8 +1,12 @@
+import dotEnvExtended from 'dotenv-extended';
+dotEnvExtended.load({errorOnMissing: true, errorOnRegex: true});
+
 import {ApplicationConfig, Lb4GettingStartedApplication} from './application';
 
 export * from './application';
 
 export async function main(options: ApplicationConfig = {}) {
+  // run the application
   const app = new Lb4GettingStartedApplication(options);
   await app.boot();
   await app.start();
