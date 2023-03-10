@@ -9,6 +9,7 @@ import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import {MySequence} from './sequence';
+import { WinstonLoggerComponent } from './components/winston-logger';
 
 export {ApplicationConfig};
 
@@ -17,6 +18,9 @@ export class Lb4GettingStartedApplication extends BootMixin(
 ) {
   constructor(options: ApplicationConfig = {}) {
     super(options);
+
+    // Winston logger
+    this.component(WinstonLoggerComponent)
 
     // Set up the custom sequence
     this.sequence(MySequence);
